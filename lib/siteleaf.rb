@@ -30,7 +30,12 @@ module Siteleaf
   end
 
   def self.load_settings
-    if File.exist?(self.settings_file)
+    if ENV['SITELEAF_API_KEY'] && ENV['SITELEAF_API_SECRET']
+      self.api_key = ENV['SITELEAF_API_KEY']
+      self.api_secret = ENV['SITELEAF_API_SECRET']
+    end
+
+    elsif File.exist?(self.settings_file)
       config = File.open(self.settings_file) do|file|
         Marshal.load(file)
       end
